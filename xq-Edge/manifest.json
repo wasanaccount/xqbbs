@@ -1,0 +1,46 @@
+{
+    "author": "xqbbs-unamed",
+    "background": {
+        "page": "background.html",
+        "persistent": true
+    },
+    "browser_action": {
+        "default_icon": {
+            "20": "xq20.png",
+            "40": "xq40.png"
+        },
+        "default_title": "启动防刷屏"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "http://bbs.jjwxc.net/showmsg.php*"
+            ],
+            "run_at": "document_end",
+            "js": [
+                "inner.js"
+            ]
+        }
+    ],
+    "description": "晋江论坛专用防刷屏浏览器扩展(×ω×)具体功能请看设置┏( ゜ω゜)=☞",
+    "icons": {
+        "20": "xq20.png",
+        "25": "xq25.png",
+        "30": "xq30.png",
+        "40": "xq40.png"
+    },
+    "manifest_version": 2,
+    "name": "晋江论坛防刷屏",
+    "options_page": "options.html",
+    "permissions": [
+        "tabs",
+        "storage",
+        "notifications",
+        "http://bbs.jjwxc.net/*"
+    ],
+    "version": "0.4.3",
+    "-ms-preload": {
+        "backgroundScript": "backgroundScriptsAPIBridge.js",
+        "contentScript": "contentScriptsAPIBridge.js"
+    }
+}

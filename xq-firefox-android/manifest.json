@@ -1,0 +1,54 @@
+﻿{
+  "manifest_version": 2,
+  "name": "晋江论坛防刷屏Android",
+  "version": "0.4.2",
+
+  "applications": {
+    "gecko": {
+        "id": "unamed@xqbbs.com"
+    }
+  },
+
+  "description": "晋江论坛专用防刷屏火狐安卓版浏览器扩展(×ω×)具体功能请看设置┏( ゜ω゜)=☞",
+  "icons": {
+    "19": "xq19.png",
+    "38": "xq38.png",
+    "48": "xq48.png",
+    "96": "xq96.png"
+  },
+
+  "background":{
+    "scripts": ["background.js"]
+  },
+
+  "browser_action":{
+    "default_title": "XQ防刷屏"
+  },
+
+  "options_ui": {
+    "chrome_style": true,
+    "page": "options.html"
+  },
+
+  "permissions":[
+    "tabs", "storage", "http://bbs.jjwxc.net/*"
+  ],
+
+  "content_scripts": [
+    {
+      "matches": ["http://bbs.jjwxc.net/showmsg.php*"],
+      "run_at": "document_end",
+      "js": ["inner.js"]
+    }
+  ],
+
+  "page_action":{
+    "browser_style": true,
+    "default_icon": {
+      "16": "xq16.png",
+      "19": "xq19.png"
+    },
+    "default_title": "Option",
+    "default_popup": "options.html"
+  }
+}

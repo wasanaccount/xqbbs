@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>XQ防刷屏设置</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      div {  margin: 0 0 10px 10px; }
+      textarea { width: 95%; }
+      input[type=number]{ width: 50%; }
+      @media screen and (min-width: 480px) {
+        input[type=number]{ width: 80px; }
+      }
+    </style>
+</head>
+<body bgcolor="#FFE7F7">
+<div>
+
+<h2>设置</h2>
+
+<!--autostart-->
+<div>
+<label>
+<input type="checkbox" id="autostart">
+自动防刷屏
+</label>
+</div>
+
+<!--length restriction-->
+<div>
+<label>
+隐藏长度高于
+<input type="number" id="hideheight" min="1" size="2" step="1"> px 的楼层
+</label>
+</div>
+
+<div>
+<label>
+不检查长度低于 
+<input type="number" id="ignoreheight" min="1" size="2" step="1"> px 的楼层
+</label>
+</div>
+
+<!-- check picture-->
+<div>
+    <label>
+      <input type="checkbox" id="hidepic">
+隐藏含有图片的楼层
+    </label>
+</div>
+  
+<!--keyword list-->
+<h4>关键词设置：</h4>
+
+<!--//hide keyword-->
+<div>
+<label>
+<input type="checkbox" id="hidekeyword">
+隐藏含有关键词的楼层
+</label>
+</div>
+
+<div>
+<label style="vertical-align: top">
+屏蔽包含以下<b>所有</b>关键词的楼层 (多个关键词请用双分号(;;)隔开)
+</label>
+<textarea id="keywordlistall" rows="3" cols="60">
+</textarea>
+</div>
+
+<div>
+<label style="vertical-align: top">
+屏蔽包含以下<b>任一</b>关键词的楼层 (多个关键词请用双分号(;;)隔开)
+</label>
+<textarea id="keywordlistany" rows="3" cols="60">
+</textarea>
+</div>
+
+<div id="status" style="color:#097"></div>
+<button id="save">保存设置</button>
+
+</div>
+
+<script src="options.js"></script>
+
+</body>
+</html>
