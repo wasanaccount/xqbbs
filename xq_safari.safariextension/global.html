@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Thread Anti-Spam Global Page</title>
+<script type="text/javascript">
+var appButton = safari.extension.toolbarItems[0];
+
+// settings
+var autoStart = (safari.extension.settings.autoStart == 'true');
+var settings = {
+  hideHeight: parseInt(safari.extension.settings.hideHeight) || 1000,
+  hidePic: (safari.extension.settings.hidePic == 'true'),
+  hideKeyword: (safari.extension.settings.hideKeyword == "true"),
+  ignoreHeight: parseInt(safari.extension.settings.ignoreHeight) || 100,
+  keywordListAll: (safari.extension.settings.keywordListAll != undefined && safari.extension.settings.keywordListAll.length > 0)?safari.extension.settings.keywordListAll.split(";;"):[],
+  keywordListAny: (safari.extension.settings.keywordListAny != undefined && safari.extension.settings.keywordListAny.length > 0)?safari.extension.settings.keywordListAny.split(";;"):[]
+};
+
+function processCommand(event)
+{
+  if (event.command === "xqbbs_start")
+  {
+    var currentUrl = event.target.browserWindow.activeTab.url;
+    if (currentUrl && currentUrl.indexOf("bbs.jjwxc.net/showmsg.php") != -1)
+      safari.application.activeBrowserWindow.activeTab.page.dispatchMessage("activate", settings);
+  }
+}
+
+function processMessage(msgEvent)
+{
+  // auto-start injected script
+  if (msgEvent.name === "isAuto" && autoStart)
+  {
+    msgEvent.target.page.dispatchMessage("activate", settings);
+  }
+  // show notification after process completion
+  else if (msgEvent.name === "complete")
+  {
+    appButton.showPopover();
+    setTimeout(function(){
+      if (appButton.popover.visible)
+        appButton.popover.hide();
+    }, 2000);
+  }
+}
+
+function settingChanged(event) {
+  switch (event.key)
+  {
+    case "autoStart": autoStart = (event.newValue == "true"); break;
+    case "hideHeight": settings.hideHeight = parseInt(event.newValue) || 1000; break;
+    case "hidePic": settings.hidePic = (event.newValue == "true"); break;
+    case "hideKeyword": settings.hideKeyword = (event.newValue == "true"); break;
+    case "ignoreHeight": settings.ignoreHeight = parseInt(event.newValue) || 100; break;
+    case "keywordListAll": 
+    {
+      if (event.newValue != undefined && event.newValue.length > 0)
+        settings.keywordListAll = event.newValue.split(";;");
+      else 
+        settings.keywordListAll = [];
+    }
+      break;
+    case "keywordListAny": 
+    {
+      if (event.newValue != undefined && event.newValue.length > 0)
+        settings.keywordListAny = event.newValue.split(";;");
+      else 
+        settings.keywordListAny = [];
+    }
+      break;
+  }
+}
+
+// toolbar button is clicked
+safari.application.addEventListener("command", processCommand, false);
+
+// message from injected script asking for settings
+safari.application.addEventListener("message", processMessage, false);
+
+// setting changes
+safari.extension.settings.addEventListener("change", settingChanged, false);
+</script>
+</head>
+<body>
+</body>
+</html>

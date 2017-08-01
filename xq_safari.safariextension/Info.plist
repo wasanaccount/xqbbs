@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Author</key>
+	<string>wassanaccount</string>
+	<key>Builder Version</key>
+	<string>12602.1.50.0.10</string>
+	<key>CFBundleDisplayName</key>
+	<string>晋江论坛防刷屏</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.mycompany.xqsafari</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleShortVersionString</key>
+	<string>0.1</string>
+	<key>CFBundleVersion</key>
+	<string>1</string>
+	<key>Chrome</key>
+	<dict>
+		<key>Global Page</key>
+		<string>global.html</string>
+		<key>Popovers</key>
+		<array>
+			<dict>
+				<key>Filename</key>
+				<string>popover.html</string>
+				<key>Height</key>
+				<integer>80</integer>
+				<key>Identifier</key>
+				<string>xqbbsComplete</string>
+				<key>Width</key>
+				<integer>140</integer>
+			</dict>
+		</array>
+		<key>Toolbar Items</key>
+		<array>
+			<dict>
+				<key>Command</key>
+				<string>xqbbs_start</string>
+				<key>Identifier</key>
+				<string>xqbbs</string>
+				<key>Image</key>
+				<string>Icon-16.png</string>
+				<key>Include By Default</key>
+				<true/>
+				<key>Label</key>
+				<string>启动防刷屏</string>
+				<key>Popover</key>
+				<string>xqbbsComplete</string>
+			</dict>
+		</array>
+	</dict>
+	<key>Content</key>
+	<dict>
+		<key>Scripts</key>
+		<dict>
+			<key>End</key>
+			<array>
+				<string>inner.js</string>
+			</array>
+		</dict>
+		<key>Whitelist</key>
+		<array>
+			<string>http://bbs.jjwxc.net/showmsg.php</string>
+		</array>
+	</dict>
+	<key>Description</key>
+	<string>晋江论坛专用防刷屏浏览器扩展(×ω×)具体功能请看设置┏( ゜ω゜)=☞</string>
+	<key>DeveloperIdentifier</key>
+	<string>0000000000</string>
+	<key>ExtensionInfoDictionaryVersion</key>
+	<string>1.0</string>
+	<key>Permissions</key>
+	<dict>
+		<key>Website Access</key>
+		<dict>
+			<key>Allowed Domains</key>
+			<array>
+				<string>bbs.jjwxc.net</string>
+			</array>
+			<key>Include Secure Pages</key>
+			<false/>
+			<key>Level</key>
+			<string>Some</string>
+		</dict>
+	</dict>
+</dict>
+</plist>
