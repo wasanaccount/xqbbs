@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "晋江论坛防刷屏",
-    "version": "0.4.3",
+    "version": "0.4.4",
 
     "description": "晋江论坛专用防刷屏浏览器扩展(×ω×)具体功能请看设置┏( ゜ω゜)=☞",
     "icons": {
@@ -29,11 +29,11 @@
     },
 
     "permissions":[
-        "tabs", "storage", "notifications", "http://bbs.jjwxc.net/*"
+        "tabs", "storage", "notifications", "http://bbs.jjwxc.net/*", "http://bbs.jjwxc.com/*"
     ],
 
     "content_scripts": [{
-        "matches": ["http://bbs.jjwxc.net/showmsg.php*"],
+        "matches": ["http://bbs.jjwxc.net/showmsg.php*", "http://bbs.jjwxc.com/showmsg.php*"],
         "run_at": "document_end",
         "js": ["inner.js"]
     }]

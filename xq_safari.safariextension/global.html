@@ -22,7 +22,7 @@ function processCommand(event)
   if (event.command === "xqbbs_start")
   {
     var currentUrl = event.target.browserWindow.activeTab.url;
-    if (currentUrl && currentUrl.indexOf("bbs.jjwxc.net/showmsg.php") != -1)
+    if (currentUrl && (currentUrl.indexOf("bbs.jjwxc.net/showmsg.php") != -1 || currentUrl.indexOf("bbs.jjwxc.com/showmsg.php") != -1))
       safari.application.activeBrowserWindow.activeTab.page.dispatchMessage("activate", settings);
   }
 }

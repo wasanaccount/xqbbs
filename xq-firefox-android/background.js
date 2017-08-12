@@ -9,7 +9,7 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
 });
 
 function checkUrl(url){
-    if (url!=undefined && url.indexOf("bbs.jjwxc.net/showmsg.php") != -1)
+    if (url!=undefined && (url.indexOf("bbs.jjwxc.net/showmsg.php") != -1 || url.indexOf("bbs.jjwxc.com/showmsg.php") != -1))
         return true;
     else 
         return false;

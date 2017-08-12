@@ -13,7 +13,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.1</string>
+	<string>0.1.1</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>Chrome</key>
@@ -63,6 +63,7 @@
 		<key>Whitelist</key>
 		<array>
 			<string>http://bbs.jjwxc.net/showmsg.php</string>
+			<string>http://bbs.jjwxc.com/showmsg.php</string>
 		</array>
 	</dict>
 	<key>Description</key>
@@ -78,6 +79,7 @@
 			<key>Allowed Domains</key>
 			<array>
 				<string>bbs.jjwxc.net</string>
+				<string>bbs.jjwxc.com</string>
 			</array>
 			<key>Include Secure Pages</key>
 			<false/>

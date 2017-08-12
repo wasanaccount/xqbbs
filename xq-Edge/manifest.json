@@ -14,7 +14,7 @@
     "content_scripts": [
         {
             "matches": [
-                "http://bbs.jjwxc.net/showmsg.php*"
+                "http://bbs.jjwxc.net/showmsg.php*", "http://bbs.jjwxc.com/showmsg.php*"
             ],
             "run_at": "document_end",
             "js": [
@@ -36,9 +36,10 @@
         "tabs",
         "storage",
         "notifications",
-        "http://bbs.jjwxc.net/*"
+        "http://bbs.jjwxc.net/*",
+        "http://bbs.jjwxc.com/*"
     ],
-    "version": "0.4.3",
+    "version": "0.4.4",
     "-ms-preload": {
         "backgroundScript": "backgroundScriptsAPIBridge.js",
         "contentScript": "contentScriptsAPIBridge.js"
