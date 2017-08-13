@@ -73,13 +73,6 @@ function toggleImageName (elem, defaultStat = false)
     elem.textContent = "[-隐藏图片]";
 }
 
-function ignoreThis(elem, h)
-{
-  if (elem.scrollHeight <= h)
-    return true;
-  return false;
-}
-
 function createToggler(reply)
 {
   var newSpan = document.createElement("span");
@@ -129,10 +122,12 @@ function checkKeyword(txt, keylistall, keylistany)
 
 function hasImage(elem)
 {
-  if (elem.getElementsByTagName("img").length > 0)
-    return true;
-  else
-    return false;
+  return (elem.getElementsByTagName("img").length > 0);
+}
+
+function ignoreThis(elem, h)
+{
+  return (elem.scrollHeight <= h);
 }
 
 function createImageToggler(reply)
