@@ -88,6 +88,23 @@ function createToggler(reply)
   return newSpan;
 }
 
+function createImageToggler(reply)
+{
+  var newSpan = document.createElement("span");
+  newSpan.setAttribute("style", "cursor:pointer;color:#00f;");
+  newSpan.onclick = function(){
+    toggleImageContent(this);
+  };
+
+  toggleName(newSpan);
+
+  reply.insertBefore(newSpan, reply.firstChild);
+
+  toggleImageContent(newSpan); 
+
+  return newSpan;
+}
+
 function checkKeyword(txt, keylistall, keylistany)
 {
   // keywords &&
@@ -128,23 +145,6 @@ function hasImage(elem)
 function ignoreThis(elem, h)
 {
   return (elem.scrollHeight <= h);
-}
-
-function createImageToggler(reply)
-{
-  var newSpan = document.createElement("span");
-  newSpan.setAttribute("style", "cursor:pointer;color:#00f;");
-  newSpan.onclick = function(){
-    toggleImageContent(this);
-  };
-
-  toggleName(newSpan);
-
-  reply.insertBefore(newSpan, reply.firstChild);
-
-  toggleImageContent(newSpan); 
-
-  return newSpan;
 }
 
 function main(settings)

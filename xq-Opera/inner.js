@@ -29,29 +29,50 @@ function toggleContent(elem, reason="")
       var reasonSpan = document.createElement("span");
       reasonSpan.setAttribute("style", "color:#f00");
 
-      switch (reason)
-      {
-        case "length": reasonSpan.textContent = "长度大于设定值"; break;
-        case "keyword": reasonSpan.textContent = "关键词"; break;
-        case "pic": reasonSpan.textContent = "含图片"; break;
-      }
+      if (reason == "length")
+        reasonSpan.textContent = "长度大于设定值";
+      else if (reason == "keyword") 
+        reasonSpan.textContent = "关键词";
 
-      elem.parentElement.insertBefore(reasonSpan, elem);
+      elem.parentNode.insertBefore(reasonSpan, elem);
     }
     toggleName(elem, true);
+  }
+}
+
+function toggleImageContent(elem)
+{
+  var images = elem.parentNode.getElementsByTagName("img");
+
+  for (var i = 0; i < images.length; ++i)
+  {
+    if (images[i].offsetParent === null)
+    {
+      images[i].setAttribute("style", "");
+      toggleImageName(elem);
+    }
+    else
+    {
+      images[i].setAttribute("style", "display:none");
+      toggleImageName(elem, true);
+    }
   }
 }
 
 function toggleName(elem, defaultStat = false)
 {
   if (elem.textContent == "[-取消显示]" || defaultStat)
-  {
     elem.textContent = "[+显示全部]";
-  }
   else
-  {
     elem.textContent = "[-取消显示]";
-  }
+}
+
+function toggleImageName (elem, defaultStat = false)
+{
+  if (elem.textContent == "[-隐藏全部图片]" || defaultStat)
+    elem.textContent = "[+显示全部图片]";
+  else
+    elem.textContent = "[-隐藏图片]";
 }
 
 function ignoreThis(elem, h)
@@ -72,6 +93,23 @@ function createToggler(reply)
   toggleName(newSpan);
 
   reply.parentNode.parentNode.insertBefore(newSpan, reply.parentNode);
+
+  return newSpan;
+}
+
+function createImageToggler(reply)
+{
+  var newSpan = document.createElement("span");
+  newSpan.setAttribute("style", "cursor:pointer;color:#00f;");
+  newSpan.onclick = function(){
+    toggleImageContent(this);
+  };
+
+  toggleName(newSpan);
+
+  reply.insertBefore(newSpan, reply.firstChild);
+
+  toggleImageContent(newSpan); 
 
   return newSpan;
 }
@@ -110,18 +148,23 @@ function checkKeyword(txt, keylistall, keylistany)
 
 function hasImage(elem)
 {
-  if (elem.getElementsByTagName("img").length > 0)
-    return true;
-  else
-    return false;
+  return (elem.getElementsByTagName("img").length > 0);
+}
+
+function ignoreThis(elem, h)
+{
+  return (elem.scrollHeight <= h);
 }
 
 function main(settings)
 {
-  var replies = document.querySelectorAll('.read');
+  var replies = document.getElementsByClassName('read');
 
   for (var i = 0; i < replies.length; ++i)
   {
+    if (settings.hidepic == true && hasImage(replies[i]))
+      createImageToggler(replies[i]); 
+
     // check max height
     if (replies[i].scrollHeight > settings.hideheight)
     {
@@ -135,13 +178,6 @@ function main(settings)
     {
       var newSpan = createToggler(replies[i]);
       toggleContent(newSpan, "keyword");
-      continue;
-    }
-
-    if (settings.hidepic == true && hasImage(replies[i]))
-    {
-      var newSpan = createToggler(replies[i]);
-      toggleContent(newSpan, "pic");
       continue;
     }
 
