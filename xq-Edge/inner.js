@@ -43,19 +43,19 @@ function toggleContent(elem, reason="")
 function toggleImageContent(elem)
 {
   var images = elem.parentNode.getElementsByTagName("img");
-
-  for (var i = 0; i < images.length; ++i)
+  if (images[0].offsetParent === null)
   {
-    if (images[i].offsetParent === null)
-    {
+    for (var i = 0; i < images.length; ++i)
       images[i].setAttribute("style", "");
-      toggleImageName(elem);
-    }
-    else
-    {
+
+    toggleImageName(elem);
+  }
+  else
+  {
+    for (var i = 0; i < images.length; ++i)
       images[i].setAttribute("style", "display:none");
-      toggleImageName(elem, true);
-    }
+      
+    toggleImageName(elem, true);
   }
 }
 
