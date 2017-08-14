@@ -44,7 +44,7 @@
 		<key>Key</key>
 		<string>hidePic</string>
 		<key>Title</key>
-		<string>隐藏含有图片的楼层</string>
+		<string>开启无图模式</string>
 		<key>TrueValue</key>
 		<string>true</string>
 		<key>Type</key>

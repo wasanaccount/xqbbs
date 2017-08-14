@@ -39,7 +39,7 @@
         "http://bbs.jjwxc.net/*",
         "http://bbs.jjwxc.com/*"
     ],
-    "version": "0.4.4",
+    "version": "0.5.0",
     "-ms-preload": {
         "backgroundScript": "backgroundScriptsAPIBridge.js",
         "contentScript": "contentScriptsAPIBridge.js"

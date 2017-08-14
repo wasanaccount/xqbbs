@@ -72,7 +72,7 @@ function toggleImageName (elem, defaultStat = false)
   if (elem.textContent == "[-隐藏全部图片]" || defaultStat)
     elem.textContent = "[+显示全部图片]";
   else
-    elem.textContent = "[-隐藏图片]";
+    elem.textContent = "[-隐藏全部图片]";
 }
 
 function ignoreThis(elem, h)

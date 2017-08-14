@@ -70,7 +70,7 @@ function toggleImageName (elem, defaultStat = false)
   if (elem.textContent == "[-隐藏全部图片]" || defaultStat)
     elem.textContent = "[+显示全部图片]";
   else
-    elem.textContent = "[-隐藏图片]";
+    elem.textContent = "[-隐藏全部图片]";
 }
 
 function createToggler(reply)
@@ -154,7 +154,7 @@ function main(settings)
   for (var i = 0; i < replies.length; ++i)
   {
     if (settings.hidepic == true && hasImage(replies[i]))
-      createImageToggler(replies[i]); 
+      createImageToggler(replies[i]);
 
     // check max height
     if (replies[i].scrollHeight > settings.hideheight)
