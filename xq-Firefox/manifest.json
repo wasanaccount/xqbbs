@@ -1,7 +1,7 @@
 ﻿{
     "manifest_version": 2,
     "name": "晋江论坛防刷屏",
-    "version": "0.5.0",
+    "version": "0.6.0",
 
     "applications": {
         "gecko": {
@@ -41,5 +41,11 @@
         "matches": ["http://bbs.jjwxc.net/showmsg.php*", "http://bbs.jjwxc.com/showmsg.php*"],
         "run_at": "document_end",
         "js": ["inner.js"]
-    }]
+    },
+    {
+        "matches": ["http://bbs.jjwxc.net/board.php*", "http://bbs.jjwxc.com/board.php*"],
+        "run_at": "document_end",
+        "js": ["frontpage.js"]
+    }
+    ]
 }
