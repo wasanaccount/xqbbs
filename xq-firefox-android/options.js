@@ -4,18 +4,11 @@ function save_options(){
   var hideHeight = document.getElementById("hideheight").value;
   var hideKeyword = document.getElementById("hidekeyword").checked;
   var hidePic = document.getElementById("hidepic").checked;
-  var keywordListAll = document.getElementById("keywordlistall").value;
-  var keywordListAny = document.getElementById("keywordlistany").value;
-
-  if (keywordListAll != undefined && keywordListAll.length > 0)
-    keywordListAll = keywordListAll.split(";;");
-  else 
-  keywordListAll = [];
-
-  if (keywordListAny != undefined && keywordListAny.length > 0)
-    keywordListAny = keywordListAny.split(";;");
-  else 
-    keywordListAny = [];
+  var keywordListAll = processKeywords(document.getElementById("keywordlistall").value);
+  var keywordListAny = processKeywords(document.getElementById("keywordlistany").value);
+  var hideThread = document.getElementById("hidethread").checked;
+  var threadKeyListAll = processKeywords(document.getElementById("threadkeylistall").value);
+  var threadKeyListAny = processKeywords(document.getElementById("threadkeylistany").value);
 
   chrome.storage.local.set({
     autostart: autostart,
@@ -24,7 +17,10 @@ function save_options(){
     hidekeyword: hideKeyword,
     hidepic: hidePic,
     keywordlistall: keywordListAll,
-    keywordlistany: keywordListAny
+    keywordlistany: keywordListAny,
+    hidethread: hideThread,
+    threadkeylistall: threadKeyListAll,
+    threadkeylistany: threadKeyListAny
   }, function(){
     // update status
     var status = document.getElementById("status");
@@ -35,16 +31,27 @@ function save_options(){
   });
 }
 
+function processKeywords(klist)
+{
+  if (klist != undefined && klist.length > 0)
+    return klist.split(";;").filter(function(elem){return /\S/.test(elem);});
+  else 
+    return [];
+}
+
 function restore_options(){
     // Use default settings
     chrome.storage.local.get({
-      autostart: true,
+      autostart: false,
       ignoreheight: 100,
       hideheight: 1000,
       hidekeyword: false,
       hidepic: false,
       keywordlistall: [],
-      keywordlistany: []
+      keywordlistany: [],
+      hidethread: false,
+      threadkeylistall: [],
+      threadkeylistany: []
     }, function(items){
       document.getElementById("autostart").checked = items.autostart;
       document.getElementById("ignoreheight").value = items.ignoreheight;
@@ -53,6 +60,9 @@ function restore_options(){
       document.getElementById("hidepic").checked = items.hidepic;
       document.getElementById("keywordlistall").value = items.keywordlistall.join(";;");
       document.getElementById("keywordlistany").value = items.keywordlistany.join(";;");
+      document.getElementById("hidethread").checked = items.hidethread;
+      document.getElementById("threadkeylistall").value = items.threadkeylistall.join(";;");
+      document.getElementById("threadkeylistany").value = items.threadkeylistany.join(";;");
     });
 }
 

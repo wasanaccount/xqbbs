@@ -198,7 +198,7 @@ function afterProcess()
 }
 
 chrome.runtime.onMessage.addListener(function(msg){
-  if (msg == "start")
+  if (msg == "thread")
   {
     chrome.storage.local.get({
       ignoreheight: 100,

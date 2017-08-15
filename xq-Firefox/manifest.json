@@ -46,6 +46,5 @@
         "matches": ["http://bbs.jjwxc.net/board.php*", "http://bbs.jjwxc.com/board.php*"],
         "run_at": "document_end",
         "js": ["frontpage.js"]
-    }
-    ]
+    }]
 }

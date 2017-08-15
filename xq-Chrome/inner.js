@@ -186,9 +186,9 @@ function main(settings)
 }
 
 chrome.runtime.onMessage.addListener(function(msg){
-  if (msg == "start")
+  if (msg == "thread")
   {
-    chrome.storage.local.get({
+    chrome.storage.sync.get({
       ignoreheight: 100,
       hideheight: 1000,
       hidekeyword: false,
