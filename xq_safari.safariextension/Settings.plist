@@ -82,5 +82,35 @@
 		<key>Type</key>
 		<string>TextField</string>
 	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<string>false</string>
+		<key>FalseValue</key>
+		<string>false</string>
+		<key>Key</key>
+		<string>hideThread</string>
+		<key>Title</key>
+		<string>隐藏首页含有关键词的帖子</string>
+		<key>TrueValue</key>
+		<string>true</string>
+		<key>Type</key>
+		<string>CheckBox</string>
+	</dict>
+	<dict>
+		<key>Key</key>
+		<string>threadKeyListAll</string>
+		<key>Title</key>
+		<string>隐藏包含以下所有关键词的帖子</string>
+		<key>Type</key>
+		<string>TextField</string>
+	</dict>
+	<dict>
+		<key>Key</key>
+		<string>threadKeyListAny</string>
+		<key>Title</key>
+		<string>隐藏包含以下任一关键词的帖子</string>
+		<key>Type</key>
+		<string>TextField</string>
+	</dict>
 </array>
 </plist>

@@ -85,7 +85,7 @@ function createImageToggler(reply)
     toggleImageContent(this);
   };
 
-  toggleName(newSpan);
+  toggleImageName(newSpan);
 
   reply.insertBefore(newSpan, reply.firstChild);
 
@@ -126,6 +126,36 @@ function checkKeyword(txt, keylistall, keylistany)
   return false;
 }
 
+function hasKeyword(trow, keylistall, keylistany)
+{
+  var threadtitle = trow.getElementsByTagName("a")[0].textContent;
+
+  return checkKeyword(threadtitle, keylistall, keylistany);
+}
+
+function toggleThread(toggler, filtercount = 0)
+{
+  var threads = document.getElementsByClassName("xqbbs-thfilter");
+
+  if (threads.length <= 0)
+    return;
+
+  if (threads[0].offsetParent === null)
+  {
+    for (var i = 0; i < threads.length; ++i)
+      threads[i].setAttribute("style", "");
+
+    toggleThreadName(toggler, filtercount);
+  }
+  else
+  {
+    for (var i = 0; i < threads.length; ++i)
+      threads[i].setAttribute("style", "display:none");
+
+    toggleThreadName(toggler, filtercount);
+  }
+}
+
 function hasImage(elem)
 {
   return (elem.getElementsByTagName("img").length > 0);
@@ -136,7 +166,15 @@ function ignoreThis(elem, h)
   return (elem.scrollHeight <= h);
 }
 
-function main(settings)
+function toggleThreadName(toggler, hiddencount = 0)
+{
+  if (toggler.textContent.indexOf("[-隐藏") != -1)
+    toggler.textContent = "[+显示"+hiddencount+"屏蔽帖]";
+  else
+    toggler.textContent = "[-隐藏"+hiddencount+"屏蔽帖]";
+}
+
+function inner(settings)
 {
   var replies = document.getElementsByClassName('read');
 
@@ -172,9 +210,44 @@ function main(settings)
   safari.self.tab.dispatchMessage("complete");
 }
 
+function frontpage(settings)
+{
+  // find all thread that need to be hidden
+  var allthreads = document.getElementsByTagName("tr");
+
+  var filtercount = 0;
+
+  for (var i = 0; i < allthreads.length; ++i)
+  {
+    if (allthreads[i].getAttribute("valign") != undefined && allthreads[i].getAttribute("valign") == "middle" &&
+        hasKeyword(allthreads[i], settings.threadKeyListAll, settings.threadKeyListAny))
+    {
+      allthreads[i].setAttribute("class", "xqbbs-thfilter");
+      ++filtercount;
+    }
+  }
+
+  // create toggler for toggling threads
+  var newSpan = document.createElement("span");
+  newSpan.setAttribute("style", "cursor:pointer;color:#00f;");
+  newSpan.setAttribute("id", "xqbbs-thread-toggler");
+  newSpan.onclick = function(){ toggleThread(this, filtercount); };
+
+  toggleThreadName(newSpan, filtercount);
+
+  document.getElementById("searchlink").parentNode.appendChild(newSpan);
+
+  toggleThread(newSpan, filtercount); 
+
+  // process complete
+  safari.self.tab.dispatchMessage("complete");
+}
+
 safari.self.addEventListener("message", function(msgEvent){
-  if (msgEvent.name === "activate")
-    main(msgEvent.message);
+  if (msgEvent.name === "thread")
+    inner(msgEvent.message);
+  else if (msgEvent.name === "frontpage")
+    frontpage(msgEvent.message);
 }, false);
 
 // check automation setting

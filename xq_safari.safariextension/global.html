@@ -8,23 +8,39 @@ var appButton = safari.extension.toolbarItems[0];
 
 // settings
 var autoStart = (safari.extension.settings.autoStart == 'true');
-var settings = {
+var hideThread = (safari.extension.settings.hideThread == 'true');
+var threadSettings = {
   hideHeight: parseInt(safari.extension.settings.hideHeight) || 1000,
   hidePic: (safari.extension.settings.hidePic == 'true'),
-  hideKeyword: (safari.extension.settings.hideKeyword == "true"),
+  hideKeyword: (safari.extension.settings.hideKeyword == 'true'),
   ignoreHeight: parseInt(safari.extension.settings.ignoreHeight) || 100,
-  keywordListAll: (safari.extension.settings.keywordListAll != undefined && safari.extension.settings.keywordListAll.length > 0)?safari.extension.settings.keywordListAll.split(";;"):[],
-  keywordListAny: (safari.extension.settings.keywordListAny != undefined && safari.extension.settings.keywordListAny.length > 0)?safari.extension.settings.keywordListAny.split(";;"):[]
+  keywordListAll: processKeywords(safari.extension.settings.keywordListAll),
+  keywordListAny: processKeywords(safari.extension.settings.keywordListAny)
+};
+var frontpageSettings = {
+  threadKeyListAll: processKeywords(safari.extension.settings.threadKeyListAll),
+  threadKeyListAny: processKeywords(safari.extension.settings.threadKeyListAny)
 };
 
 function processCommand(event)
 {
   if (event.command === "xqbbs_start")
   {
-    var currentUrl = event.target.browserWindow.activeTab.url;
-    if (currentUrl && (currentUrl.indexOf("bbs.jjwxc.net/showmsg.php") != -1 || currentUrl.indexOf("bbs.jjwxc.com/showmsg.php") != -1))
-      safari.application.activeBrowserWindow.activeTab.page.dispatchMessage("activate", settings);
+    if (isThreadUrl(event.target.browserWindow.activeTab.url))
+      safari.application.activeBrowserWindow.activeTab.page.dispatchMessage("thread", threadSettings);
+    else if (isFrontpageUrl(event.target.browserWindow.activeTab.url) && hideThread)
+      safari.application.activeBrowserWindow.activeTab.page.dispatchMessage("frontpage", frontpageSettings);
   }
+}
+
+function isThreadUrl(url)
+{
+  return (url != undefined && url.indexOf("showmsg.php") != -1);
+}
+
+function isFrontpageUrl(url)
+{
+  return (url != undefined && url.indexOf("board.php") != -1);
 }
 
 function processMessage(msgEvent)
@@ -32,7 +48,10 @@ function processMessage(msgEvent)
   // auto-start injected script
   if (msgEvent.name === "isAuto" && autoStart)
   {
-    msgEvent.target.page.dispatchMessage("activate", settings);
+    if (isThreadUrl(msgEvent.target.url))
+      msgEvent.target.page.dispatchMessage("thread", threadSettings);
+    else if (isFrontpageUrl(msgEvent.target.url) && hideThread)
+      msgEvent.target.page.dispatchMessage("frontpage", frontpageSettings);
   }
   // show notification after process completion
   else if (msgEvent.name === "complete")
@@ -49,27 +68,24 @@ function settingChanged(event) {
   switch (event.key)
   {
     case "autoStart": autoStart = (event.newValue == "true"); break;
-    case "hideHeight": settings.hideHeight = parseInt(event.newValue) || 1000; break;
-    case "hidePic": settings.hidePic = (event.newValue == "true"); break;
-    case "hideKeyword": settings.hideKeyword = (event.newValue == "true"); break;
-    case "ignoreHeight": settings.ignoreHeight = parseInt(event.newValue) || 100; break;
-    case "keywordListAll": 
-    {
-      if (event.newValue != undefined && event.newValue.length > 0)
-        settings.keywordListAll = event.newValue.split(";;");
-      else 
-        settings.keywordListAll = [];
-    }
-      break;
-    case "keywordListAny": 
-    {
-      if (event.newValue != undefined && event.newValue.length > 0)
-        settings.keywordListAny = event.newValue.split(";;");
-      else 
-        settings.keywordListAny = [];
-    }
-      break;
+    case "hideHeight": threadSettings.hideHeight = parseInt(event.newValue) || 1000; break;
+    case "hidePic": threadSettings.hidePic = (event.newValue == "true"); break;
+    case "hideKeyword": threadSettings.hideKeyword = (event.newValue == "true"); break;
+    case "ignoreHeight": threadSettings.ignoreHeight = parseInt(event.newValue) || 100; break;
+    case "keywordListAll": threadSettings.keywordListAll = processKeywords(event.newValue); break;
+    case "keywordListAny": threadSettings.keywordListAny = processKeywords(event.newValue); break;
+    case "hideThread": hideThread = (event.newValue == "true"); break;
+    case "threadKeyListAll": frontpageSettings.threadKeyListAll = processKeywords(event.newValue); break;
+    case "threadKeyListAny": frontpageSettings.threadKeyListAny = processKeywords(event.newValue); break;
   }
+}
+
+function processKeywords(klist)
+{
+  if (klist!=undefined && klist.length>0)
+    return klist.split(";;").filter(function(elem){ return /\S/.test(elem);});
+  else
+    return [];
 }
 
 // toolbar button is clicked

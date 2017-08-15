@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>Author</key>
-	<string>wassanaccount</string>
+	<string>wasanaccount</string>
 	<key>Builder Version</key>
 	<string>12602.1.50.0.10</string>
 	<key>CFBundleDisplayName</key>
@@ -13,7 +13,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.1.1</string>
+	<string>0.6.0</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>Chrome</key>
@@ -64,6 +64,8 @@
 		<array>
 			<string>http://bbs.jjwxc.net/showmsg.php</string>
 			<string>http://bbs.jjwxc.com/showmsg.php</string>
+			<string>http://bbs.jjwxc.com/board.php</string>
+			<string>http://bbs.jjwxc.net/board.php</string>
 		</array>
 	</dict>
 	<key>Description</key>
