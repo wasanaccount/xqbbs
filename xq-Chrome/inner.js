@@ -98,7 +98,7 @@ function createImageToggler(reply)
     toggleImageContent(this);
   };
 
-  toggleName(newSpan);
+  toggleImageName(newSpan);
 
   reply.insertBefore(newSpan, reply.firstChild);
 
